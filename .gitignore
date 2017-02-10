@@ -1,3 +1,15 @@
 *.pyc
 __pycache__*.pyc
 __pycache__
+www/analytics
+venv/bin
+venv/build
+venv/include
+venv/lib
+venv/local
+.git/
+Include/
+Lib/
+Scripts/
+*.swp
+*.cfg
