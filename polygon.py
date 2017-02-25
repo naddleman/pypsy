@@ -28,10 +28,16 @@ class Polygon:
         
     
     def getSideangle(self, side):
-        '''side i's angle to the x-axis'''
-        return (math.pi - self.interior_angle/2) + (side % self.sides) \
-        * self.exterior_angle
-    
+        '''side i's angle to the x-axis
+        '''
+        side = side % self.sides
+        if side < (self.sides - 1):
+            return arg(self.vertices[side+1][0] - self.vertices[side][0],
+            self.vertices[side+1][1] - self.vertices[side][1])
+        else:
+            return arg(self.vertices[0][0] - self.vertices[side][0],
+            self.vertices[0][1] - self.vertices[side][1])
+        
     def polygonal_norm(x,y):
         '''returns polygonal norm for the point x,y relative to Polygon
         this is the distance from the center to the nearest point, Z, on the 
@@ -41,7 +47,7 @@ class Polygon:
         #find which face the pont is closest to
         def triangle(x,y):
             for i in self.sidelabels:
-                if 0 - self.angle + 2*math.pi / self.sides * i <= arg_M \
-                < 0 - self.angle + 2*math.pi / self.sides * (i+1):
+                if self.angle + 2*math.pi / self.sides * i <= arg_M \
+                < self.angle + 2*math.pi / self.sides * (i+1):
                     return i
         return 'TODO'
