@@ -6,8 +6,11 @@ import math
 def arg(x, y): 
     if x == 0 and y == 0:
         return 0
-    return math.acos(x / math.hypot(x, y))
-    
+    if y >= 0:
+        return math.acos(x / math.hypot(x, y))
+    else:
+        return 2*math.pi - math.acos(x / math.hypot(x, y))
+
 class Polygon:
     '''a regular convex polygon'''
     
@@ -38,16 +41,23 @@ class Polygon:
             return arg(self.vertices[0][0] - self.vertices[side][0],
             self.vertices[0][1] - self.vertices[side][1])
         
-    def polygonal_norm(x,y):
+    def polygonal_norm(self, x, y):
         '''returns polygonal norm for the point x,y relative to Polygon
         this is the distance from the center to the nearest point, Z, on the 
         polygon where the polygon is the unique n-gon centered at center 
         containing M = (x, y) '''
         arg_M = arg(x, y)
         #find which face the pont is closest to
-        def triangle(x,y):
-            for i in self.sidelabels:
-                if self.angle + 2*math.pi / self.sides * i <= arg_M \
-                < self.angle + 2*math.pi / self.sides * (i+1):
-                    return i
+        pass
+
+    def triangle(self, x, y):
+        for i in self.sidelabels:
+            if self.angle + 2*math.pi / self.sides * i <= arg(x,y) \
+            < self.angle + 2*math.pi / self.sides * (i+1):
+                return i
         return 'TODO'
+    
+    def is_interior(self, x, y):
+        '''tells whether a point with coordinates (x,y) is in the interior
+        of the polygon'''
+
